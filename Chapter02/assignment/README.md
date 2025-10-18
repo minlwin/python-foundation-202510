@@ -4,10 +4,10 @@
 
 1. You are given Python files with stub functions.
 2. Your task is to implement the functions so that all test cases PASS.
-3. Run the tests using:(
-```
-pytest 
-```
+3. Run the tests using:
+    ```
+    pytest 
+    ```
 
 ## 📂 File: src/chapter2.py
 ```
