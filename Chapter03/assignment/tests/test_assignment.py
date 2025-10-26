@@ -1,4 +1,3 @@
-import pytest
 from src.assignment import *
 
 def test_calculate_sum():
