@@ -39,11 +39,12 @@ if __name__ == "__main__":
                 print("------------------------")   
             case "2":
                 print("Create Task")
-                print("------------------------")   
-                task_name = input("Task Name : ")
-                id += 1
-                tasks[id] = task_name
-                print(f"Your task is created at id : {id}")
+                print("------------------------")      
+                task_name = None
+                while task_name == None:
+                    task_name = input("Task Name : ")
+                tasks[id := id + 1] = task_name
+                print(f"Your task is created at id : {id}")  
                 print("------------------------")   
             case "3":
                 print("Find Task")
@@ -52,7 +53,7 @@ if __name__ == "__main__":
                 found = False
                 for id in tasks.keys():
                     task = tasks[id]
-                    if task.lower().startswith(keyword.lower()):
+                    if keyword.lower() in task.lower():
                         print(f"{id}. {task}")
                         found = True
                 if not found:
