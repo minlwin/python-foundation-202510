@@ -1,6 +1,4 @@
-import pytest
 from src.chapter2 import create_person, age_next_year, is_adult, format_intro, favorite_fruits
-
 
 def test_create_person():
     person = create_person("Alice", 20, 1.65, True)
