@@ -1,0 +1,43 @@
+=======================
+Welcome to POS
+=======================
+
+Select Operation:
+1. Add Product
+2. Product List
+3. Create Voucher
+4. Sale History
+
+Operation ID : < User Input
+
+1. Add Product
+------------------------
+Name  : < User Input
+Price : < User Input
+
+{Product Name} is created at id : {created id}
+------------------------
+
+Select Operation:
+1. Add Product
+2. Product List
+3. Create Voucher
+4. Sale History
+
+Operation ID : < User Input
+
+2: Add Product
+-------------------------------
+ID  Product           Price
+-------------------------------
+1.  Pepsi             500
+2.  Coke              700
+-------------------------------
+
+Select Operation:
+1. Add Product
+2. Product List
+3. Create Voucher
+4. Sale History
+
+Operation ID : < User Input

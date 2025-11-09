@@ -1,8 +1,6 @@
 # 1. A simple function that returns a greeting message
 def greet(name: str) -> str:
-    # TODO: return "Hello, <name>!"
-    pass
-
+    return f"Hello, {name}!"
 
 # 2. A function to calculate the area of a circle (πr²)
 def circle_area(radius: float) -> float:

@@ -1,5 +1,4 @@
 import math
-import pytest
 
 from src.assignment import (
     greet,
