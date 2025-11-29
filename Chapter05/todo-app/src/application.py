@@ -1,26 +1,32 @@
-from src.utils import show_message, get_operation_id
-from src.operations import show_all, create_task, delete_tasks, find_tasks
+from src.operation import Operation
 
-def main():
-    
-    show_message("TODO Application")
+class Application:
+    def __init__(self, name:str, operations:list[Operation]) -> None:
+        self.name = name
+        self.operations = operations
 
-    while True:
-        operation_id = get_operation_id()
-        
-        match operation_id:
-            case "1":
-               show_all()
-            case "2":
-                create_task()
-            case "3":
-                find_tasks()
-            case "4":
-                delete_tasks()
-            case _:
+    @staticmethod
+    def show_message(message:str):
+        pass
+
+    def get_operation(self):
+        print("Select Operation")
+        for operation in self.operations:
+            print(f"{operation.id}. {operation.name}")
+
+        selected_id = input("\nSelected ID : ")
+
+        for operation in self.operations:
+            if operation.id == int(selected_id):
+                return operation
+
+    def start(self):
+        Application.show_message(self.name)
+
+        while True:
+            operation = self.get_operation()
+            if operation == None:
                 break
-
-    show_message("Thank You")
-
-if __name__ == "__main__":
-    main()
+            operation.execute()
+        
+        Application.show_message("Thank You")
