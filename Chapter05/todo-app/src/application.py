@@ -1,4 +1,10 @@
-from src.operation import Operation
+from abc import abstractmethod, ABC
+
+_MESSAGE_FMT = """
+================================
+{}
+================================
+"""
 
 class Application:
     def __init__(self, name:str, operations:list[Operation]) -> None:
@@ -7,7 +13,7 @@ class Application:
 
     @staticmethod
     def show_message(message:str):
-        pass
+        print(_MESSAGE_FMT.format(message))
 
     def get_operation(self):
         print("Select Operation")
@@ -30,3 +36,18 @@ class Application:
             operation.execute()
         
         Application.show_message("Thank You")
+
+class Operation(ABC):
+
+    def __init__(self, id:int, name:str) -> None:
+        self.id = id
+        self.name = name
+
+    def execute(self):
+        print(f"{self.id}. {self.name}")
+        self.do_business()
+        print("\n")
+
+    @abstractmethod
+    def do_business(self):
+        pass
