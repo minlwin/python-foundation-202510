@@ -38,6 +38,9 @@ class TaskManager:
     def find_by_id(self, id:int) -> Task | None:
         return self._tasks.get(id)
     
+    def delete(self, id:int):
+        del self._tasks[id]
+    
 class TaskBaseOperation:
     def __init__(self) -> None:
         self._manager = TaskManager() 
@@ -76,6 +79,8 @@ class CreateTask(TaskBaseOperation, Operation):
         # Show Result
         print(f"{task.name} is created with id {task.id}.")
 
+
+
 class UpdateStatus(TaskBaseOperation, Operation):
     def __init__(self, id = 3) -> None:
         super().__init__()
@@ -107,12 +112,68 @@ class UpdateStatus(TaskBaseOperation, Operation):
         task.status = Status(selected_value)
         print(f"{task.name} status is updated to {task.status.name}.")
     
+class UpdateName(TaskBaseOperation, Operation):
+    def __init__(self, id = 4) -> None:
+        super().__init__()
+        self.id = id
+        self.name = "Update Task Name"
+
+    def do_business(self):
+        # Get Task Id
+        task_id = input("Enter Task ID : ")
+        
+        # Get Task form Task Manager
+        task = self._manager.find_by_id(int(task_id))
+        
+        # If Not Found
+        if task == None:
+            print(f"There is no task with {task_id}")
+            return
+        
+        # If Status is not updateble
+        if task.status != Status.Created:
+            print(f"{task.status.name} can't be update.")
+            return
+
+        # Else
+        name = input("Enter Task Name : ")
+        task.name = name
+        print(f"Task name is updated to {task.name}.")
+
+class DeleteTask(TaskBaseOperation, Operation):
+    def __init__(self, id = 5) -> None:
+        super().__init__()
+        self.id = id
+        self.name = "Delete Task"
+
+    def do_business(self):
+        # Get Task Id
+        task_id = input("Enter Task ID : ")
+        
+        # Get Task form Task Manager
+        task = self._manager.find_by_id(int(task_id))
+        
+        # If Not Found
+        if task == None:
+            print(f"There is no task with {task_id}")
+            return
+        
+        # If Status is not updateble
+        if task.status == Status.Done:
+            print(f"Done tasks can't be deleted.")
+            return
+        
+        # Else
+        self._manager.delete(int(task_id))
+        print(f"{task.name} is deleted successfully.")
+        
+
 if __name__ == "__main__":
     operations = [
         CreateTask(id=1),
         ShowAllTasks(id=2),
         UpdateStatus(id=3),
-        # Update Name Operation
-        # Delete Task Operation
+        UpdateName(id=4),
+        DeleteTask(id=5)
     ]
     Application("TODO Application", operations).start()
