@@ -18,7 +18,7 @@ class SaleItem:
 @dataclass
 class Sale:
     id: int
-    items: tuple[SaleItem]
+    items: tuple[SaleItem, ...]
     tax: int
 
     def sub_total(self) -> int:
@@ -27,12 +27,20 @@ class Sale:
     def all_total(self) -> int:
         return self.sub_total() + self.tax
     
+    def total_count(self) -> int:
+        count = 0
+        for item in self.items:
+            count += item.quantity
+        
+        return count
+
     @staticmethod
-    def sum(items: tuple[SaleItem]) -> int:
+    def sum(items: tuple[SaleItem, ...]) -> int:
         amount = 0
         for item in items:
             amount += item.total()
         return amount
+    
 
 
 class SaleManager:
@@ -48,7 +56,7 @@ class SaleManager:
         self._tax_rate = 5
         self._sales : dict[int, Sale] = {}
 
-    def create(self, items: tuple[SaleItem]) -> Sale:
+    def create(self, items: tuple[SaleItem, ...]) -> Sale:
         self._id = self._id + 1
         sub_total = Sale.sum(items)
         tax = sub_total // 100 * self._tax_rate
