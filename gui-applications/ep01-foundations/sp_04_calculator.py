@@ -1,5 +1,6 @@
 import flet as ft
 from dataclasses import field
+from decimal import Decimal
 
 def Display(output : ft.Text):
     output.size = 48
@@ -48,17 +49,24 @@ def application(page : ft.Page):
 
     output = ft.Text(value="0")
 
-    def press_number(event : ft.Event[ft.Button]):
-        value = output.value
-        number = event.control.content
+    state = {
+        "prev_value" : None,
+        "last_ope" : None,
+        "replace_output" : True
+    }
 
-        if value == "0" :
-            output.value = number
+    def press_number(event : ft.Event[ft.Button]):
+        if state["replace_output"] :
+            output.value = event.control.content
+            state["replace_output"] = False
         else :
-            output.value = value + number
+            output.value = f"{output.value}{event.control.content}"
     
     def clear(event : ft.Event[ft.Button]):
         output.value = "0"
+        state["last_ope"] = None
+        state["prev_value"] = None
+        state["replace_output"] = True
 
     def plus_minus(event : ft.Event[ft.Button]):
         value = output.value
@@ -67,17 +75,38 @@ def application(page : ft.Page):
                 output.value = value[1:]
             else :
                 output.value = "-" + value 
-
+        state["replace_output"] = False
 
     def do_decimal(event : ft.Event[ft.Button]):
-        pass
+        if "." not in output.value:
+            output.value = f"{output.value}."
+        state["replace_output"] = False
 
     def press_operator(event : ft.Event[ft.Button]):
-        pass
+        if state["prev_value"] != None and state["last_ope"] != None:
+            calculate()
+        state["prev_value"] = output.value
+        state["last_ope"] = event.control.content
+        state["replace_output"] = True
 
-    def calculate(event : ft.Event[ft.Button]):
-        pass
-    
+    def press_equal(event : ft.Event[ft.Button]):
+        if state["prev_value"] != None and state["last_ope"] != None:
+            calculate()
+        state["prev_value"] = None
+        state["last_ope"] = None
+        state["replace_output"] = True
+
+    def calculate():
+        digit1 = Decimal(state["prev_value"])
+        digit2 = Decimal(output.value)
+        result = Decimal(0)
+        match state["last_ope"]:
+            case "+" : result = digit1 + digit2
+            case "-" : result = digit1 - digit2
+            case "*" : result = digit1 * digit2
+            case "/" : result = digit1 / digit2
+            case "%" : result = digit1 % digit2
+        output.value = str(result)
 
     page.add(ft.Column(
         expand=True,
@@ -104,7 +133,7 @@ def application(page : ft.Page):
                     ActionButton(content="+", on_click=press_operator),
                     DigitButton(content="0", col=6, on_click=press_number),
                     DigitButton(content=".", on_click=do_decimal),
-                    ActionButton(content="=", on_click=calculate)
+                    ActionButton(content="=", on_click=press_equal)
                 ],
             )
         ]
