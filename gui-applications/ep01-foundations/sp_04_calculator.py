@@ -3,7 +3,7 @@ from dataclasses import field
 from decimal import Decimal
 
 def Display(output : ft.Text):
-    output.size = 48
+    output.size = 40
     output.color = ft.Colors.WHITE
     return ft.ResponsiveRow(
         controls=[
@@ -83,18 +83,28 @@ def application(page : ft.Page):
         state["replace_output"] = False
 
     def press_operator(event : ft.Event[ft.Button]):
-        if state["prev_value"] != None and state["last_ope"] != None:
-            calculate()
-        state["prev_value"] = output.value
-        state["last_ope"] = event.control.content
-        state["replace_output"] = True
+        try:
+            if state["prev_value"] != None and state["last_ope"] != None:
+                calculate()
+            state["prev_value"] = output.value
+            state["last_ope"] = event.control.content
+            state["replace_output"] = True
+        except ZeroDivisionError:
+            output.value = "Can't divide by 0"
+            state["prev_value"] = None
+            state["last_ope"] = None
+            state["replace_output"] = True
 
     def press_equal(event : ft.Event[ft.Button]):
-        if state["prev_value"] != None and state["last_ope"] != None:
-            calculate()
-        state["prev_value"] = None
-        state["last_ope"] = None
-        state["replace_output"] = True
+        try: 
+            if state["prev_value"] != None and state["last_ope"] != None:
+                calculate()
+        except ZeroDivisionError:
+            output.value = "Can't divide by 0"
+        finally:
+            state["prev_value"] = None
+            state["last_ope"] = None
+            state["replace_output"] = True
 
     def calculate():
         digit1 = Decimal(state["prev_value"])
@@ -106,7 +116,7 @@ def application(page : ft.Page):
             case "*" : result = digit1 * digit2
             case "/" : result = digit1 / digit2
             case "%" : result = digit1 % digit2
-        output.value = str(result)
+        output.value = str(round(result, 12))
 
     page.add(ft.Column(
         expand=True,
