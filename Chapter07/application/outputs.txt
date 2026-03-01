@@ -1,0 +1,60 @@
+==============================
+Welcome to ATM
+==============================
+
+Enter ID  : 1001 
+Enter PIN : hello
+
+--------------------------
+Operations
+1. Check Balance
+2. Deposit
+3. Withdraw
+
+Enter ID : 1
+
+--------------------------
+1. Check Balance
+
+Your Balance is 1002029
+
+--------------------------
+Operations
+1. Check Balance
+2. Deposit
+3. Withdraw
+
+Enter ID : 2
+
+--------------------------
+2. Deposit
+
+Enter Amount : 10000
+Your Balance is 1002029
+
+--------------------------
+Operations
+1. Check Balance
+2. Deposit
+3. Withdraw
+
+Enter ID : 3
+
+--------------------------
+3. Withdraw
+
+Enter Amount : 10000
+Your Balance is 1002029
+
+--------------------------
+Operations
+1. Check Balance
+2. Deposit
+3. Withdraw
+
+Enter ID : 4
+
+==============================
+Thank You
+==============================
+
