@@ -7,25 +7,54 @@ class Account:
         self._balance = 0
         self.name = name
 
-    def checkPin(self, pin : str):
+    def check_pin(self, pin : str):
         return self._pin == pin
     
-    def getBalance(self):
+    def get_balance(self):
         return self._balance
     
-    def deposit(self, amount: int):
-        self._balance += amount
+    def deposit(self, amount : int):
+        self._balance += self._check_amount(amount)
         return self._balance
+
+    def withdraw(self, amount : int):
+        withdraw_amount = self._check_amount(amount)
+
+        if withdraw_amount > self._balance:
+            raise AccountError(f"You can't withdraw {amount} from your balance {self._balance}.")
+
+        self._balance -= withdraw_amount
+        return self._balance
+    
+    @staticmethod
+    def _check_amount(amount):
+
+        if amount == None:
+            raise AccountError("Amount must not be none.")
+
+        try:
+            value = int(amount)
+
+            if value == 0:
+                raise AccountError("Amount must not be Zero.")
+            
+            if value < 0:
+                raise AccountError("Amount must not be Minus Value.")
+
+            return value
+        except ValueError:
+            raise AccountError("Amount must be valid integer.")
+
 
 AccountInput = namedtuple('AccountInput', ["id", "name", "pin"])
 
 class AccountError(Exception):
-    def __init__(self, *args):
-        super().__init__(*args)
+    def __init__(self, message):
+        self.message = message
 
 class AccountManager:
     def __init__(self, accounts : list[AccountInput]):
-        self._storage = {input.id : Account(**input) for input in accounts}
+        self._storage = {input.id : Account(*input) for input in accounts}
 
     def login(self, id: str, pin : str):
         account = self._storage.get(id)
@@ -33,7 +62,7 @@ class AccountManager:
         if account == None:
             raise AccountError("Invalid account id.")
         
-        if not account.checkPin(pin):
+        if not account.check_pin(pin):
             raise AccountError("Invalid PIN Number")
         
         return account

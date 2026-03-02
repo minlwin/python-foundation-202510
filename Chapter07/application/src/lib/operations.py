@@ -32,7 +32,7 @@ class BalanceCheckOperation(OperationBase):
         super().__init__("Check Balance", account)
 
     def operate(self):
-        print(f"Your balance is {self.account.getBalance()}")
+        print(f"Your balance is {self.account.get_balance()}")
     
 class DepositOperation(OperationBase):
 
@@ -41,8 +41,8 @@ class DepositOperation(OperationBase):
 
     def operate(self):
         amount = input("Enter Amount : ")
-        balance = self.account.deposit(amount)
-        print(f"Your balance is {self.account.getBalance()}")
+        balance = self.account.deposit(int(amount))
+        print(f"Your balance is {self.account.get_balance()}")
     
 class WithdrawOperation(OperationBase):
 
@@ -51,5 +51,5 @@ class WithdrawOperation(OperationBase):
 
     def operate(self):
         amount = input("Enter Amount : ")
-        balance = self.account.withdraw(amount)
-        print(f"Your balance is {self.account.getBalance()}")
+        balance = self.account.withdraw(int(amount))
+        print(f"Your balance is {self.account.get_balance()}")
