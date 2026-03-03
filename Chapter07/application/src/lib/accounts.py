@@ -57,13 +57,19 @@ class AccountManager:
         self._storage = {input.id : Account(*input) for input in accounts}
 
     def login(self, id: str, pin : str):
+        if id == None or id == '':
+            raise AccountError("Please enter Account ID.")
+        
+        if pin == None or pin == '':
+            raise AccountError("Please enter PIN.")
+        
         account = self._storage.get(id)
         
         if account == None:
-            raise AccountError("Invalid account id.")
+            raise AccountError("Please check your ID.")
         
         if not account.check_pin(pin):
-            raise AccountError("Invalid PIN Number")
+            raise AccountError("Please check your PIN.")
         
         return account
 

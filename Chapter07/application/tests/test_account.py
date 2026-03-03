@@ -21,8 +21,9 @@ def test_get_balance(account):
 
 @pytest.fixture
 def deposit_account(request):
-    account = Account(request.param[0], request.param[1], request.param[2])
-    account._balance = request.param[3]
+    id, name, pin, amount = request.param
+    account = Account(id, name, pin)
+    account._balance = amount
     return account
 
 @pytest.mark.parametrize("deposit_account,amount,expected",[
@@ -52,8 +53,9 @@ def test_deposit_fails(account, amount, expected):
     pytest.param(("A001", "Mike", "A001", 1_000_000), id="1,000,000 Account"),
 ])
 def withdraw_account(request):
-    account = Account(request.param[0], request.param[1], request.param[2])
-    account._balance = request.param[3]
+    id, name, pin, amount = request.param
+    account = Account(id, name, pin)
+    account._balance = amount
     return account
 
 @pytest.mark.parametrize("amount", [
