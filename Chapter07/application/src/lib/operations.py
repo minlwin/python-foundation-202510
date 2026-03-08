@@ -1,14 +1,17 @@
 from abc import ABC, abstractmethod
-from lib.accounts import Account
+from src.lib.accounts import Account
 
 class OperationBase(ABC):
     counter = 0
 
     def __init__(self, name:str, account:Account):
         super().__init__()
-        self.id = self.__class__.generateId()
+        self.id = OperationBase.generateId()
         self.name = name
         self.account = account
+
+    def show_menu(self):
+        print(f"{self.id}. {self.name}")
 
     def execute(self):
         print("--------------------------")
@@ -24,7 +27,7 @@ class OperationBase(ABC):
     @classmethod
     def generateId(cls):
         cls.counter += 1
-        return cls.counter
+        return str(cls.counter)
     
 class BalanceCheckOperation(OperationBase):
 
@@ -41,7 +44,7 @@ class DepositOperation(OperationBase):
 
     def operate(self):
         amount = input("Enter Amount : ")
-        balance = self.account.deposit(int(amount))
+        balance = self.account.deposit(amount)
         print(f"Your balance is {self.account.get_balance()}")
     
 class WithdrawOperation(OperationBase):
@@ -51,5 +54,5 @@ class WithdrawOperation(OperationBase):
 
     def operate(self):
         amount = input("Enter Amount : ")
-        balance = self.account.withdraw(int(amount))
+        balance = self.account.withdraw(amount)
         print(f"Your balance is {self.account.get_balance()}")

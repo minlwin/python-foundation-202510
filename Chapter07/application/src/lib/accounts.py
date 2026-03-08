@@ -13,11 +13,11 @@ class Account:
     def get_balance(self):
         return self._balance
     
-    def deposit(self, amount : int):
+    def deposit(self, amount):
         self._balance += self._check_amount(amount)
         return self._balance
 
-    def withdraw(self, amount : int):
+    def withdraw(self, amount):
         withdraw_amount = self._check_amount(amount)
 
         if withdraw_amount > self._balance:
