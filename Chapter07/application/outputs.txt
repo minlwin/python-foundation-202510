@@ -11,7 +11,7 @@ Operations
 2. Deposit
 3. Withdraw
 
-Enter ID : 1
+Select Operation : 1
 
 --------------------------
 1. Check Balance
@@ -24,7 +24,7 @@ Operations
 2. Deposit
 3. Withdraw
 
-Enter ID : 2
+Select Operation : 2
 
 --------------------------
 2. Deposit
@@ -38,7 +38,7 @@ Operations
 2. Deposit
 3. Withdraw
 
-Enter ID : 3
+Select Operation : 3
 
 --------------------------
 3. Withdraw
