@@ -1,0 +1,2 @@
+1,'Java Basic','Language Foundation,OOP,Essential API'
+2,'Python','Foundation,OOP,Data Structure'
