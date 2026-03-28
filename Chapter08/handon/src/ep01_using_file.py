@@ -1,19 +1,24 @@
 import csv
+from pathlib import Path
 
 def generate_id():
-    with open('files/user_id.txt', "w+") as file:
-        value = 0
-        temp = file.read()
-        if temp is not None:
-            if temp is not "":
+    value = 0
+    try:
+        with open('files/user_id.txt', "r+") as file:
+            temp = file.read()
+            if temp is not None and temp is not "":
                 value = int(temp)
             value += 1
-            
+                
             file.seek(0)
             file.write(str(value))
             file.truncate()
-
-        return value
+    except FileNotFoundError:
+        with open('files/user_id.txt', "w") as file:
+            value += 1
+            file.write(str(value))
+            file.truncate()
+    return value
 
 def show_title(title):
     print(f"{'':-^30}")
@@ -29,13 +34,14 @@ def create_user():
     user['phone'] = input(f"{'Enter Phone':<15}: ")
     user['email'] = input(f"{'Enter Email':<15}: ")
     user['address'] = input(f"{'Enter Address':<15}: ")
+    
+    first_time = not Path("files/users.txt").exists();
 
-    with open("files/users.txt", "a+") as file:
+    with open("files/users.txt", "a") as file:
         writer = csv.DictWriter(file, fieldnames=['id', 'name', 'phone', 'email', 'address'], quoting=csv.QUOTE_ALL)
-
-        if not file.read(1):
+        
+        if first_time:
             writer.writeheader()
-
         writer.writerow(user)
 
     print(f"\n{user['name']} is created with id {user['id']}.\n")

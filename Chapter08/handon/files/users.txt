@@ -1,2 +1,4 @@
 "id","name","phone","email","address"
-"1","Mike","01919181","mike@gmail.com","Kamayut, Yangon"
+"1","Mike","0918178171","mike@example.com","Kamayut, Yangon"
+"2","Thidar","01817171711","thidar@gmail.com","Yankin, Yangon"
+"3","Nancy","0191817171","nancy@gmail.com","London, UK"
